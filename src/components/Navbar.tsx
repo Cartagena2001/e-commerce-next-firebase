@@ -10,15 +10,18 @@ import {
   AiOutlineShoppingCart,
 } from "react-icons/ai";
 import NavBarButtom from "./NavBarButtom";
+import Link from "next/link";
 
 const Navbar = () => {
   return (
     <nav className="w-full bg-black text-white sticky top-0 z-20">
       <div className="w-full  h-full border-b-[1px] border-b-white">
         <section className="max-w-container mx-auto h-20 px-4 flex items-center justify-between gap-2">
-          <div className="navBarHover">
-            <Image className="w-44" alt="logo" src={logo}></Image>
-          </div>
+          <Link href="/">
+            <div className="navBarHover">
+              <Image className="w-44" alt="logo" src={logo}></Image>
+            </div>
+          </Link>
           <div className="navBarHover">
             <div className="w-4 grid grid-cols-2 gap-[2px]">
               <FaWarehouse />
@@ -30,7 +33,7 @@ const Navbar = () => {
               <div className="w-4 grid grid-cols-2 gap-[2px]">
                 <MdOutlineRoomService />
               </div>
-              <p>Services</p>
+              <p>Servicios</p>
             </div>
           </div>
           <div className="h-10 flex flex-1 relative">
@@ -57,13 +60,15 @@ const Navbar = () => {
               <h2 className="text-base font-semibold -mt-1">Cuenta</h2>
             </div>
           </div>
-          <div className="flex flex-col justify-center items-center gap-2 h-12 px-5 rounded-full bg-transparent hover:bg-gray-950 duration-300 relative cursor-pointer">
-            <AiOutlineShoppingCart className="text-2xl" />
-            <p className="text-[10px] -mt-2">$0.00</p>
-            <span className="absolute w-4 h-4 bg-white text-black top-0 right-4 rounded-full flex items-center justify-center text-xs">
-              0
-            </span>
-          </div>
+          <Link href="/cart">
+            <div className="flex flex-col justify-center items-center gap-2 h-12 px-5 rounded-full bg-transparent hover:bg-gray-950 duration-300 relative cursor-pointer">
+              <AiOutlineShoppingCart className="text-2xl" />
+              <p className="text-[10px] -mt-2">$0.00</p>
+              <span className="absolute w-4 h-4 bg-white text-black top-0 right-4 rounded-full flex items-center justify-center text-xs">
+                0
+              </span>
+            </div>
+          </Link>
         </section>
       </div>
       <NavBarButtom />

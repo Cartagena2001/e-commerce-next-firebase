@@ -5,6 +5,8 @@ import Navbar from "@/components/Navbar";
 import Banner from "@/components/Banner";
 import {Product} from "../../type";
 import  Products from "@/components/Products";
+import Footer from "@/components/Footer";
+import TopFooter from "@/components/TopFooter";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -23,8 +25,7 @@ export default function Home({productData}: Props) {
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main className={`bg-lightBlue ${inter.className}`}>
-        <Navbar />
+      <main className={`${inter.className}`}>
         <div className="max-w-[80%] mx-auto bg-white">
           <Banner />
           <Products productData={productData}/>
