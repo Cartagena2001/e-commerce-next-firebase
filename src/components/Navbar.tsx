@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { logo } from "../../public/assets/images/index";
 import { FaWarehouse } from "react-icons/fa";
@@ -11,8 +11,20 @@ import {
 } from "react-icons/ai";
 import NavBarButtom from "./NavBarButtom";
 import Link from "next/link";
+import { useSelector } from "react-redux";
 
 const Navbar = () => {
+  const productData = useSelector((state: any) => state.shopper.productData);
+  const [totalAmt, setTotalAmt] = useState("");
+
+  useEffect(() => {
+    let price = 0;
+    productData.map((item: any) => {
+      price += item.price * item.quantity;
+      return price;
+    });
+    setTotalAmt(price.toFixed(2));
+  }, [productData]);
   return (
     <nav className="w-full bg-black text-white sticky top-0 z-20">
       <div className="w-full  h-full border-b-[1px] border-b-white">
@@ -63,9 +75,9 @@ const Navbar = () => {
           <Link href="/cart">
             <div className="flex flex-col justify-center items-center gap-2 h-12 px-5 rounded-full bg-transparent hover:bg-gray-950 duration-300 relative cursor-pointer">
               <AiOutlineShoppingCart className="text-2xl" />
-              <p className="text-[10px] -mt-2">$0.00</p>
+              <p className="text-[10px] -mt-2">${totalAmt}</p>
               <span className="absolute w-4 h-4 bg-white text-black top-0 right-4 rounded-full flex items-center justify-center text-xs">
-                0
+                {productData.length > 0 ? productData.length : 0}
               </span>
             </div>
           </Link>

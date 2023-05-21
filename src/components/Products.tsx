@@ -4,10 +4,15 @@ import Image from "next/image";
 import { GoPlus } from "react-icons/go";
 import { BsStarFill } from "react-icons/bs";
 import Link from "next/link";
+import { useDispatch } from "react-redux";
+import { addToCart } from "../../redux/shopperSlice";
+import { Toaster, toast } from 'sonner'
 
 const Products = ({ productData }: any) => {
+  const dispatch = useDispatch();
   return (
     <div className="py-6 px-4 grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-5">
+      <Toaster position="top-center"/>
       {productData.map((item: Item) => (
         <div
           key={item._id}
@@ -24,7 +29,24 @@ const Products = ({ productData }: any) => {
           </div>
           <div className="px-2 py-4 flex flex-col justify-center">
             <div className="flex justify-between py-2">
-              <button className="w-24 h-9 bg-black text-white rounded-full flex gap-1 items-center justify-center hover:bg-gray-900 duration-300">
+              <button
+                onClick={() =>
+                  dispatch(
+                    addToCart({
+                      _id: item._id,
+                      title: item.title,
+                      description: item.description,
+                      image: item.image,
+                      price: item.price,
+                      oldPrice: item.oldPrice,
+                      quantity: 1,
+                      brand: item.brand,
+                      category: item.category,
+                    })
+                  ) && toast.success(`${item.title.substring(0,20)} agregado al carrito`)
+                }
+                className="w-24 h-9 bg-black text-white rounded-full flex gap-1 items-center justify-center hover:bg-gray-900 duration-300"
+              >
                 <span>
                   <GoPlus />
                 </span>
@@ -43,7 +65,7 @@ const Products = ({ productData }: any) => {
                     category: item.category,
                     image: item.image,
                     isNew: item.isNew,
-                  }
+                  },
                 }}
                 as={`/product/${item._id}`}
               >

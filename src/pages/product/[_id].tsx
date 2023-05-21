@@ -6,9 +6,13 @@ import { ship1Img, ship2Img, ship3Img } from "../../../public/assets/images";
 import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
+import { useDispatch } from "react-redux";
+import { addToCart } from "../../../redux/shopperSlice";
+import { Toaster, toast } from 'sonner'
 
 const ProductDetails = () => {
   const router = useRouter();
+  const dispatch = useDispatch();
   const [product, setProduct] = useState<any>({});
   const [isLoading, setLoading] = useState(false);
 
@@ -18,7 +22,7 @@ const ProductDetails = () => {
     setLoading(false);
   }, []);
 
-  console.log(product);
+  const _id = Number(product._id);
 
   return (
     <>
@@ -29,6 +33,7 @@ const ProductDetails = () => {
         <meta name="author" content="KartaShop" />
       </Head>
       <section className="w-full bg-white px-5">
+      <Toaster position="top-center"/>
         <div className="max-w-[80rem] mx-auto grid grid-cols-1 lg:grid-cols-5 justify-items-center content-center py-4">
           <section className="col-span-3 flex items-center justify-center overflow-hidden relative">
             <img
@@ -49,9 +54,9 @@ const ProductDetails = () => {
                     Mejor vendedor
                   </button>
                   <Link href="/">
-                  <button className="px-2 py-[1px] text-red-500 text-sm border-[1px] border-red-500 rounded-sm">
-                    Retroceder
-                  </button>
+                    <button className="px-2 py-[1px] text-red-500 text-sm border-[1px] border-red-500 rounded-sm">
+                      Retroceder
+                    </button>
                   </Link>
                 </div>
                 <IoMdHeartEmpty className="text-2xl text-red-500" />
@@ -102,7 +107,24 @@ const ProductDetails = () => {
               </section>
               {/* Add to cart */}
               <section className="border-b-[1px] border-b-zinc-300 pb-4">
-                <button className="p-3 bg-black text-white rounded-full hover:bg-white hover:text-black border border-black hover:border-black duration-300">
+                <button
+                  onClick={() =>
+                    dispatch(
+                      addToCart({
+                        _id: _id,
+                        title: product.title,
+                        description: product.description,
+                        image: product.image,
+                        price: product.price,
+                        oldPrice: product.oldPrice,
+                        quantity: 1,
+                        brand: product.brand,
+                        category: product.category,
+                      })
+                    )&& toast.success(`${product.title.substring(0,20)} agregado al carrito`)
+                  }
+                  className="p-3 bg-black text-white rounded-full hover:bg-white hover:text-black border border-black hover:border-black duration-300"
+                >
                   Agregar Carrito
                 </button>
               </section>
