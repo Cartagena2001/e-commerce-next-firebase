@@ -11,7 +11,7 @@ const Layout = ({children}:Props) => {
   return (
     <>
     <Navbar />
-    <main className='bg-lightBlue'>
+    <main>
         {children}
     </main>
     <TopFooter />

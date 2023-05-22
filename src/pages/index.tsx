@@ -25,7 +25,7 @@ export default function Home({productData}: Props) {
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main className={`${inter.className}`}>
+      <main className={`bg-lightBlue ${inter.className}`}>
         <div className="max-w-[80%] mx-auto bg-white">
           <Banner />
           <Products productData={productData}/>

@@ -11,8 +11,9 @@ import { Toaster, toast } from 'sonner'
 const Products = ({ productData }: any) => {
   const dispatch = useDispatch();
   return (
+    <>
+    <Toaster position="top-center"/>
     <div className="py-6 px-4 grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-5">
-      <Toaster position="top-center"/>
       {productData.map((item: Item) => (
         <div
           key={item._id}
@@ -103,6 +104,7 @@ const Products = ({ productData }: any) => {
         </div>
       ))}
     </div>
+    </>
   );
 };
 
