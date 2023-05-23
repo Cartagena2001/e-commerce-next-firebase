@@ -81,7 +81,7 @@ const ProductDetails = () => {
                 </div>
                 <div className="flex items-end gap-2">
                   <p className="font-semibold  text-2xl text-green-700">
-                    Now ${product.price}
+                    Ahora ${product.price}
                   </p>
                   <p className="text-sm text-zinc-500 line-through flex items-center gap-1">
                     ${product.oldPrice}

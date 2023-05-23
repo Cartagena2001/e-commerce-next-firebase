@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {
   emptyCart,
@@ -28,6 +28,28 @@ import { Toaster, toast } from "sonner";
 const CartPage = () => {
   const dispatch = useDispatch();
   const productData = useSelector((state: any) => state.shopper.productData);
+  const [warningMsg, setWarningMsg] = useState(false);
+  //prices
+  const [totalOldPrice, setTotalOldPrice] = useState(0);
+  const [totalSavings, setTotalSavings] = useState(0);
+  const [totalAmt, setTotalAmt] = useState(0);
+
+  useEffect(() => {
+    setWarningMsg(true);
+    let oldPrice = 0;
+    let savings = 0;
+    let amt = 0;
+    productData.map((item: StoreProduct) => {
+      oldPrice += item.oldPrice * item.quantity;
+      savings += item.oldPrice - item.price;
+      amt += item.price * item.quantity;
+      return;
+    });
+    setTotalOldPrice(oldPrice);
+    setTotalSavings(savings);
+    setTotalAmt(amt);
+  }, [productData]);
+
   return (
     <>
       <Head>
@@ -87,7 +109,7 @@ const CartPage = () => {
                       key={item._id}
                       className="grid grid-cols-1 lg:grid-cols-4 justify-between gap-4 border-b-[1px] border-b-zinc-200 pb-4"
                     >
-                      <div className="lg:col-span-3 flex items-center flex-wrap gap-2">
+                      <div className="lg:col-span-3 flex items-center flex-wrap lg:flex-nowrap gap-2">
                         <Image
                           className="w-32"
                           width={500}
@@ -217,7 +239,76 @@ const CartPage = () => {
             </section>
           </div>
           <div className="lg:col-span-1 p-4 mt-24 h-[500px] border-[1px] border-zinc-400 rounded-md  flex flex-col justify-center gap-4">
-            test
+            <div className="w-full flex flex-col gap-4 border-b-[1px] border-b-zinc-200 pb-4">
+              <button className="bg-black hover:bg-gray-900 w-full text-white h-10 rounded-full font-semibold duration-300">
+                Continuar para el pagar
+              </button>
+              <p className="text-sm text-center text-red-500 -mt-4 font-semibold">
+                Registrase para el pago
+              </p>
+              {warningMsg && (
+                <div className="bg-black text-white p-2 rounded-lg flex items-center justify-between gap-4">
+                  <Image className="w-10" src={warningImg} alt="warning" />
+                  <p className="text-sm">
+                    Los artículos de su cesta tienen precios reducidos.
+                    Compruébalo ahora para ahorrar más.
+                  </p>
+                  <IoMdClose
+                    onClick={() => setWarningMsg(false)}
+                    className="text-3xl hover:text-red-400 cursor-pointer duration-200"
+                  />
+                </div>
+              )}
+              <p className="text-sm text-center">
+                La mejor experiencia de compra en línea,{" "}
+                <span className="underline underline-offset-2 docoration-[1px]">
+                  Login
+                </span>
+              </p>
+            </div>
+            {/* checkout price */}
+            <section className="w-full flex flex-col gap-4 border-b-[1px] border-b-zinc-200 pb-4">
+              <div className="flex flex-col gap-1">
+                <div className="text-sm flex justify-between">
+                  <p className="font-semibold">
+                    Sub Total <span>({productData.length})</span>
+                  </p>
+                  <p className="line-through text-zinc-500 text-base">
+                    <FormatePrice amount={totalOldPrice} />
+                  </p>
+                </div>
+                <div className="text-sm flex justify-between">
+                  <p className="font-semibold">Ahorras!</p>
+                  <p className="text-[#2a8703] font-bold bg-green-100 py-1 px-[2px] rounded-lg flex">
+                    - <FormatePrice amount={totalSavings} />
+                  </p>
+                </div>
+                <div className="text-sm flex justify-between">
+                  <p className="font-semibold">Precio total</p>
+                  <p className="text-zinc-800 font-normal text-base">
+                    <FormatePrice amount={totalAmt} />
+                  </p>
+                </div>
+              </div>
+            </section>
+            <section className="w-full flex flex-col gap-4 border-b-[1px] border-b-zinc-200 pb-4">
+              <div className="flex flex-col  gap-1">
+                <div className="text-sm flex justify-between">
+                  <p>Envío</p>
+                  <p className="text-[#2a8703]">Gratis</p>
+                </div>
+                <div className="text-sm flex justify-between">
+                  <p className="font-semibold">Impuestos</p>
+                  <p className="text-zinc-800">Se calculan al pagar</p>
+                </div>
+              </div>
+            </section>
+            <section className="flex items-center justify-between">
+                <p>Costo estimado</p>
+                <p className="text-zinc-800 font-bold text-lg">
+                  <FormatePrice amount={totalAmt} />
+                </p>
+            </section>
           </div>
         </div>
       </section>
