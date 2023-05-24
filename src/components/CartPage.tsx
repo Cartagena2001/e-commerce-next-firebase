@@ -28,6 +28,7 @@ import { Toaster, toast } from "sonner";
 const CartPage = () => {
   const dispatch = useDispatch();
   const productData = useSelector((state: any) => state.shopper.productData);
+  const userInfo = useSelector((state: any) => state.shopper.userInfo);
   const [warningMsg, setWarningMsg] = useState(false);
   //prices
   const [totalOldPrice, setTotalOldPrice] = useState(0);
@@ -49,6 +50,10 @@ const CartPage = () => {
     setTotalSavings(savings);
     setTotalAmt(amt);
   }, [productData]);
+
+  const handleCheckout = () => {
+    console.log("checkout");
+  };
 
   return (
     <>
@@ -240,9 +245,18 @@ const CartPage = () => {
           </div>
           <div className="lg:col-span-1 p-4 mt-24 h-[500px] border-[1px] border-zinc-400 rounded-md  flex flex-col justify-center gap-4">
             <div className="w-full flex flex-col gap-4 border-b-[1px] border-b-zinc-200 pb-4">
-              <button className="bg-black hover:bg-gray-900 w-full text-white h-10 rounded-full font-semibold duration-300">
-                Continuar para el pagar
-              </button>
+              {userInfo ? (
+                <button
+                  onClick={handleCheckout}
+                  className="bg-black hover:bg-gray-900 w-full text-white h-10 rounded-full font-semibold duration-300"
+                >
+                  Continuar para pagar
+                </button>
+              ) : (
+                <button className="bg-black bg-opacity-50 cursor-not-allowed w-full text-white h-10 rounded-full font-semibold duration-300">
+                  Continuar para pagar
+                </button>
+              )}
               <p className="text-sm text-center text-red-500 -mt-4 font-semibold">
                 Registrase para el pago
               </p>
@@ -304,10 +318,10 @@ const CartPage = () => {
               </div>
             </section>
             <section className="flex items-center justify-between">
-                <p>Costo estimado</p>
-                <p className="text-zinc-800 font-bold text-lg">
-                  <FormatePrice amount={totalAmt} />
-                </p>
+              <p>Costo estimado</p>
+              <p className="text-zinc-800 font-bold text-lg">
+                <FormatePrice amount={totalAmt} />
+              </p>
             </section>
           </div>
         </div>

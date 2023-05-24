@@ -11,11 +11,30 @@ import {
 } from "react-icons/ai";
 import NavBarButtom from "./NavBarButtom";
 import Link from "next/link";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { useSession, signIn, signOut } from "next-auth/react";
+import { addUser, removeUser } from "../../redux/shopperSlice";
 
 const Navbar = () => {
+  const { data: session } = useSession();
+  const dispath = useDispatch();
   const productData = useSelector((state: any) => state.shopper.productData);
+  const userInfo = useSelector((state: any) => state.shopper.userInfo);
   const [totalAmt, setTotalAmt] = useState("");
+
+  useEffect(() => {
+    if (session) {
+      dispath(
+        addUser({
+          name: session.user?.name,
+          email: session.user?.email,
+          image: session.user?.image,
+        })
+      );
+    } else {
+      dispath(removeUser());
+    }
+  }, [session, dispath]);
 
   useEffect(() => {
     let price = 0;
@@ -65,13 +84,30 @@ const Navbar = () => {
               <h2 className="text-base font-semibold -mt-1">Mis Productos</h2>
             </div>
           </div>
-          <div className="navBarHover">
-            <AiOutlineUser className="text-lg" />
-            <div>
-              <p className="text-xs">Login</p>
-              <h2 className="text-base font-semibold -mt-1">Cuenta</h2>
+          {userInfo ? (
+            <div onClick={() => signOut()} className="navBarHover">
+              <Image
+                width={500}
+                height={500}
+                className="w-10 rounded-full object-cover"
+                src={userInfo.image}
+                alt="user"
+              />
+              <div>
+                <p className="text-xs">Cerrar sesion</p>
+                <h2 className="text-base font-semibold -mt-1">{userInfo.name}</h2>
+              </div>
             </div>
-          </div>
+          ) : (
+            <div onClick={() => signIn()} className="navBarHover">
+              <AiOutlineUser className="text-lg" />
+              <div>
+                <p className="text-xs">Login</p>
+                <h2 className="text-base font-semibold -mt-1">Cuenta</h2>
+              </div>
+            </div>
+          )}
+
           <Link href="/cart">
             <div className="flex flex-col justify-center items-center gap-2 h-12 px-5 rounded-full bg-transparent hover:bg-gray-950 duration-300 relative cursor-pointer">
               <AiOutlineShoppingCart className="text-2xl" />
