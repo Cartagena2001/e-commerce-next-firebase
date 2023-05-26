@@ -51,10 +51,6 @@ const CartPage = () => {
     setTotalAmt(amt);
   }, [productData]);
 
-  const handleCheckout = () => {
-    console.log("checkout");
-  };
-
   return (
     <>
       <Head>
@@ -246,15 +242,23 @@ const CartPage = () => {
           <div className="lg:col-span-1 p-4 mt-24 h-[500px] border-[1px] border-zinc-400 rounded-md  flex flex-col justify-center gap-4">
             <div className="w-full flex flex-col gap-4 border-b-[1px] border-b-zinc-200 pb-4">
               {userInfo ? (
+                <Link href={productData.length > 0 ? "/success" : ""}>
                 <button
-                  onClick={handleCheckout}
-                  className="bg-black hover:bg-gray-900 w-full text-white h-10 rounded-full font-semibold duration-300"
+                onClick={() => {
+                  if (productData.length > 0) {
+                    dispatch(resetCart())
+                  } else {
+                    toast.error('No hay productos en el carrito, no puedes pagar')
+                  }
+                }}
+                className="bg-black hover:bg-gray-900 w-full text-white h-10 rounded-full font-semibold duration-300"
                 >
-                  Continuar para pagar
+                Finalizar compra
                 </button>
+               </Link>
               ) : (
                 <button className="bg-black bg-opacity-50 cursor-not-allowed w-full text-white h-10 rounded-full font-semibold duration-300">
-                  Continuar para pagar
+                  Finalizar compra
                 </button>
               )}
               <p className="text-sm text-center text-red-500 -mt-4 font-semibold">

@@ -45,22 +45,22 @@ const Navbar = () => {
     setTotalAmt(price.toFixed(2));
   }, [productData]);
   return (
-    <nav className="w-full bg-black text-white sticky top-0 z-20">
+    <nav className="w-full bg-black text-white lg:sticky top-0 z-20">
       <div className="w-full  h-full border-b-[1px] border-b-white">
-        <section className="max-w-container mx-auto h-20 px-4 flex items-center justify-between gap-2">
+        <section className="max-w-container mx-auto h-auto py-5 px-4 lg:flex lg:items-center gl:justify-between lg:flex-wrap gap-2">
           <Link href="/">
             <div className="navBarHover">
               <Image className="w-44" alt="logo" src={logo}></Image>
             </div>
           </Link>
-          <div className="navBarHover">
+          <div className="navBarHover hidden lg:flex">
             <div className="w-4 grid grid-cols-2 gap-[2px]">
               <FaWarehouse />
             </div>
             <p>Departamento</p>
           </div>
           <div>
-            <div className="navBarHover">
+            <div className="navBarHover hidden lg:flex">
               <div className="w-4 grid grid-cols-2 gap-[2px]">
                 <MdOutlineRoomService />
               </div>
@@ -77,7 +77,7 @@ const Navbar = () => {
               <AiOutlineSearch />
             </span>
           </div>
-          <div className="navBarHover">
+          <div className="navBarHover hidden lg:flex">
             <AiOutlineHeart />
             <div>
               <p className="text-xs">Favoritos</p>
@@ -85,7 +85,7 @@ const Navbar = () => {
             </div>
           </div>
           {userInfo ? (
-            <div onClick={() => signOut()} className="navBarHover">
+            <div onClick={() => signOut()} className="navBarHover mt-5 lg:mt-0">
               <Image
                 width={500}
                 height={500}
@@ -99,7 +99,7 @@ const Navbar = () => {
               </div>
             </div>
           ) : (
-            <div onClick={() => signIn()} className="navBarHover">
+            <div onClick={() => signIn()} className="navBarHover mt-5 lg:mt-0">
               <AiOutlineUser className="text-lg" />
               <div>
                 <p className="text-xs">Login</p>
@@ -119,7 +119,9 @@ const Navbar = () => {
           </Link>
         </section>
       </div>
-      <NavBarButtom />
+      <div className="hidden md:hidden lg:block">
+        <NavBarButtom />
+      </div>
     </nav>
   );
 };

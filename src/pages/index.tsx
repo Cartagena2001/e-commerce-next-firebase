@@ -18,7 +18,7 @@ export default function Home({productData}: Props) {
   return (
     <>
       <Head>
-        <title>E-commerce Next.js + TypeScript + Firebase</title>
+        <title>KartaShop E-commerce Next.js + TypeScript + Firebase</title>
         <meta
           name="description"
           content="E-commerce Next.js + TypeScript + Firebase"

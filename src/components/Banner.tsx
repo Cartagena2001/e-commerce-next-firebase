@@ -51,8 +51,8 @@ const Banner = () => {
     prevArrow: <SamplePrevArrow />,
   };
   return (
-    <div className="w-full bg-white px-4 py-6 flex gap-4 border-b-[1px]">
-      <div className="w-2/3 rounded-lg h-[410px] shadow-bannerShadow relative">
+    <div className="w-full bg-white px-4 py-6 grid grid-cols-1 lg:grid-cols-3 gap-4 border-b-[1px]">
+      <div className="lg:col-span-2 rounded-lg h-[410px] shadow-bannerShadow relative">
         <Slider {...settings}>
           <div className="w-full h-[410px] relative">
             <Image
@@ -113,7 +113,7 @@ const Banner = () => {
           </div>
         </Slider>
       </div>
-      <div className="w-1/3 border-[1px] border-gray-200 rounded-lg shadow-bannerShadow p-4 flex flex-col justify-between">
+      <div className="lg:col-span-1 border-[1px] border-gray-200 rounded-lg shadow-bannerShadow p-4 flex flex-col justify-between">
         <div className="flex items-center justify-between">
             <h2 className="text-xl font-semibold text-black">Oferta del dia</h2>
             <p className="text-base-zinc-600 underline underline-offset-2">Ver todos</p>
