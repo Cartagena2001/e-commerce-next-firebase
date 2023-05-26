@@ -24,6 +24,7 @@ export default function Home({productData}: Props) {
           content="E-commerce Next.js + TypeScript + Firebase"
         />
         <link rel="icon" href="/favicon.ico" />
+        <meta name="google-site-verification" content="RX63-2cCqP6cWJdDn0IrVkA0QvY9RMFP4y7Yv5ZmlRc" />
       </Head>
       <main className={`bg-lightBlue ${inter.className}`}>
         <div className="max-w-[80%] mx-auto bg-white">
