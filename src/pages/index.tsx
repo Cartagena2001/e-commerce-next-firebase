@@ -37,7 +37,7 @@ export default function Home({productData}: Props) {
 
 export const getServerSideProps = async () => {
   const productData = await (
-    await fetch("http://localhost:3000/api/productdata")
+    await fetch("https://e-commerce-next-firebase.vercel.app/api/productdata")
   ).json();
 
   return {
